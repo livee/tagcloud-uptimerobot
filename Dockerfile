@@ -2,7 +2,8 @@ FROM node:13.7.0-alpine3.10
 
 RUN apk update && \
     apk upgrade && \
-    apk add --no-cache openssh-client git
+    apk add --no-cache openssh-client git && \
+    apk add bash
 
 RUN echo "https://nl.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/repositories && \
     apk update && \
