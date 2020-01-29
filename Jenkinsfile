@@ -71,7 +71,8 @@ pipeline {
                           "env.POSTGRES_CONNECTIONSTRING": "postgres://livee:${env.POSTGRES_PASSWORD}@postgres.db-staging:5432/tagcloud",
                           "env.REDIS_CONNECTIONSTRING": "redis://:${env.REDIS_PASSWORD}@redis-staging-redis-ha-master-svc.db-staging/0",
                           "env.AMQP_CONNECTIONSTRING": "amqp://livee:${env.AMQP_PASSWORD}@${AMQP_HOST}:5672/tagcloud",
-                          "env.AMQP_CHECK_STRING": "livee:${env.AMQP_PASSWORD} http://${AMQP_HOST}:15672/api/aliveness-test/tagcloud"
+                          "env.AMQP_CHECK_AUTH": "livee:${env.AMQP_PASSWORD}",
+                          "env.AMQP_CHECK_URL": "http://${AMQP_HOST}:15672/api/aliveness-test/tagcloud"
                   ]
           )
         }
@@ -106,7 +107,8 @@ pipeline {
                           "env.AMQP_CONNECTIONSTRING": "amqp://livee:${env.AMQP_PASSWORD}@${AMQP_HOST}:5672/tagcloud",
                           "env.POSTGRES_CONNECTIONSTRING": "postgres://${env.PG_USERNAME}:${env.PG_PASSWORD}@pg-sqlproxy-gcloud-sqlproxy.sqlproxy:5432/tagcloud",
                           "env.REDIS_CONNECTIONSTRING": "redis://:${env.REDIS_PASSWORD}@redis-production-redis-ha-master-svc.db-production/0",
-                          "env.AMQP_CHECK_STRING": "livee:${env.AMQP_PASSWORD} http://${AMQP_HOST}:15672/api/aliveness-test/tagcloud",
+                          "env.AMQP_CHECK_AUTH": "livee:${env.AMQP_PASSWORD}",
+                          "env.AMQP_CHECK_URL": "http://${AMQP_HOST}:15672/api/aliveness-test/tagcloud"
                           "resources.limits.cpu": "500m",
                           "resources.limits.memory": "256Mi"
                           // "resources.requests.cpu": "250m",
