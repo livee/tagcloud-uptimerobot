@@ -5,8 +5,8 @@
     {"name": "NGINX", "command": "(if [[ $(pgrep nginx | head -1) ]]; then echo 1; else echo 0; fi) | tail -1"},
     {"name": "NODE", "command": "(if [[ $(pgrep node | head -1) ]]; then echo 1; else echo 0; fi) | tail -1"},
     {"name": "REDIS", "command": "(if [[ $(rdcli -u ${REDIS_CONNECTIONSTRING} info | grep ^role | tr -d '\\r' | head -1) = 'role:master' ]]; then echo 1; else echo 0; fi) | tail -1"},
-    {"name": "POSTGRES", "command": "(if [[ $(pg_isready) == *'accepting connections'* ]]; then echo 1; else echo 0; fi) | tail -1"},
-    {"name": "AMQP", "command": "(if [[ $(rabbitmq-diagnostics is_running) == *'is fully booted and running'* ]]; then echo 1; else echo 0; fi) | tail -1"}
+    {"name": "POSTGRES", "command": "(if [[ $(pg_isready -d ${POSTGRES_CONNECTIONSTRING}) == *'accepting connections'* ]]; then echo 1; else echo 0; fi) | tail -1"},
+    {"name": "AMQP", "command": "(if [[ $(rabbitmqctl node_health_check -n rabbit) == *'Health check passed'* ]]; then echo 1; else echo 0; fi) | tail -1"}
   ],
   "hardware": [
     {"name": "PROCESSOR", "command": "mpstat 1 1 | awk '$12 ~ /[0-9.]+/ { print 100 - $12 }'", "ko_percent": 75 },
