@@ -1,5 +1,20 @@
-FROM node:8.11-alpine
-RUN apk update && apk add --no-cache openssh-client git 
+FROM node:13.7.0-alpine3.10
+
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache openssh-client git
+
+RUN echo "https://nl.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/repositories && \
+    apk update && \
+    apk add rabbitmq-server curl && \
+    apk add rabbitmq-c-utils && \
+    apk add rabbitmq-c-dev && \
+    apk add rabbitmq-c && \
+    chmod -R 777 /usr/lib/rabbitmq && \
+    chmod -R 777 /etc && \
+    mkdir /etc/rabbitmq
+
+RUN apk add postgresql
 
 # Install dependencies
 ARG SSH_PRIVATE_KEY
