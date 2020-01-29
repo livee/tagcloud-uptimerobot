@@ -5,7 +5,7 @@
     {"name": "NGINX", "command": "(if [[ $(pgrep nginx | head -1) ]]; then echo 1; else echo 0; fi) | tail -1"},
     {"name": "NODE", "command": "(if [[ $(pgrep node | head -1) ]]; then echo 1; else echo 0; fi) | tail -1"},
     {"name": "REDIS", "command": "(if [[ $(rdcli -u ${REDIS_CONNECTIONSTRING} info | grep ^role | tr -d '\\r' | head -1) = 'role:master' ]]; then echo 1; else echo 0; fi) | tail -1"},
-    {"name": "POSTGRES", "command": "(if [[ $(psql -d '${POSTGRES_CONNECTIONSTRING}' -c 'select 1195' | grep 1195) = 1195 ]]; then echo 1; else echo 0; fi) | tail -1"},
+    {"name": "POSTGRES", "command": "if [[ $(psql -d '${POSTGRES_CONNECTIONSTRING}' -c 'select 1195' | grep 1195) = 1195 ]]; then echo 1; else echo 0; fi"},
     {"name": "AMQP", "command": "(if [[ $(curl -u ${AMQP_CHECK_AUTH} ${AMQP_CHECK_URL} | jq -r '.status' | head -1) = 'ok' ]]; then echo 1; else echo 0; fi) | tail -1"}
   ],
   "hardware": [
