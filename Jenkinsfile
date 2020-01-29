@@ -104,9 +104,9 @@ pipeline {
                           "env.POSTGRES_CONNECTIONSTRING": "postgres://${env.PG_USERNAME}:${env.PG_PASSWORD}@pg-sqlproxy-gcloud-sqlproxy.sqlproxy:5432/tagcloud",
                           "env.REDIS_CONNECTIONSTRING": "redis://:${env.REDIS_PASSWORD}@redis-production-redis-ha-master-svc.db-production/0",
                           "resources.limits.cpu": "500m",
-                          "resources.limits.memory": "256Mi",
-                          "resources.requests.cpu": "100m",
-                          "resources.requests.memory": "128Mi"
+                          "resources.limits.memory": "256Mi"
+                          // "resources.requests.cpu": "250m",
+                          // "resources.requests.memory": "128Mi"
                   ]
           )
         }
