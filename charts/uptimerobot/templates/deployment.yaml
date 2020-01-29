@@ -32,6 +32,8 @@ spec:
         env:
           - name: PORT
             value: {{.Values.env.PORT| quote}}
+          - name: AMQP_CHECK_STRING
+            value: {{.Values.env.PORT| quote}}
           - name: AMQP_CONNECTIONSTRING
             valueFrom:
               secretKeyRef:
