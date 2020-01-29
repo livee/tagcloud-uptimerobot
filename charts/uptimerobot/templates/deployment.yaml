@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Values.serviceName}}-deployment
+spec:
+  replicas: {{.Values.minReplicas}}
+  selector:
+    matchLabels:
+      app: {{.Values.serviceName}}
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+        {{- range $key, $values := .Values.labels}}
+        {{$key}}: {{$values | quote}}
+        {{- end}}        
+    spec:
+      containers:
+      - name: {{.Values.serviceName}}-pod
+        image: {{.Values.image.repository}}:{{.Values.image.tag}}
+        ports:
+          - containerPort: {{.Values.containerPort}}
+        imagePullPolicy: {{.Values.image.pullPolicy}}
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
+        env:
+          - name: PORT
+            value: {{.Values.env.PORT| quote}}
+          - name: AMQP_CONNECTIONSTRING
+            valueFrom:
+              secretKeyRef:
+                name: {{.Values.serviceName}}-secret
+                key: AMQP_CONNECTIONSTRING
+          - name: POSTGRES_CONNECTIONSTRING
+            valueFrom:
+              secretKeyRef:
+                name: {{.Values.serviceName}}-secret
+                key: POSTGRES_CONNECTIONSTRING
+          - name: REDIS_CONNECTIONSTRING
+            valueFrom:
+              secretKeyRef:
+                name: {{.Values.serviceName}}-secret
+                key: REDIS_CONNECTIONSTRING
