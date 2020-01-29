@@ -47,6 +47,7 @@ pipeline {
         AMQP_PASSWORD = credentials('RABBITMQ_STAGING_PASSWORD') 
         REDIS_PASSWORD = credentials('REDIS_STAGING_PASSWORD')
         POSTGRES_PASSWORD = credentials('POSTGRES_STAGING_PASSWORD')
+        AMQP_HOST = 'rabbit-staging.queue-staging'
       }
       agent { docker 'buildpack-deps:jessie-scm' }
       when {
@@ -69,7 +70,8 @@ pipeline {
                           "image.repository": "eu.gcr.io/${env.GOOGLE_PROJECT}/${env.APP}-${env.SERVICE_NAME}",
                           "env.POSTGRES_CONNECTIONSTRING": "postgres://livee:${env.POSTGRES_PASSWORD}@postgres.db-staging:5432/tagcloud",
                           "env.REDIS_CONNECTIONSTRING": "redis://:${env.REDIS_PASSWORD}@redis-staging-redis-ha-master-svc.db-staging/0",
-                          "env.AMQP_CONNECTIONSTRING": "amqp://livee:${env.AMQP_PASSWORD}@rabbit-staging.queue-staging:5672/tagcloud"
+                          "env.AMQP_CONNECTIONSTRING": "amqp://livee:${env.AMQP_PASSWORD}@${AMQP_HOST}:5672/tagcloud",
+                          "env.AMQP_CHECK_STRING": "livee:${env.AMQP_PASSWORD} http://${AMQP_HOST}:15672/api/aliveness-test/tagcloud"
                   ]
           )
         }
@@ -81,6 +83,7 @@ pipeline {
         REDIS_PASSWORD = credentials('REDIS_PRODUCTION_PASSWORD')
         PG_USERNAME = credentials('POSTGRES_PRODUCTION_USERNAME')
         PG_PASSWORD = credentials('POSTGRES_PRODUCTION_PASSWORD')
+        AMQP_HOST = 'rabbitmq.queue-production'
       }
       agent { docker 'buildpack-deps:jessie-scm' }
       when {
@@ -100,9 +103,10 @@ pipeline {
                           "image.tag": build_number,
                           "image.repository": "eu.gcr.io/${env.GOOGLE_PROJECT}/${env.APP}-${env.SERVICE_NAME}",
                           "ingress.host": "tagcloud.livee.com",
-                          "env.AMQP_CONNECTIONSTRING": "amqp://livee:${env.AMQP_PASSWORD}@rabbitmq.queue-production:5672/tagcloud",
+                          "env.AMQP_CONNECTIONSTRING": "amqp://livee:${env.AMQP_PASSWORD}@${AMQP_HOST}:5672/tagcloud",
                           "env.POSTGRES_CONNECTIONSTRING": "postgres://${env.PG_USERNAME}:${env.PG_PASSWORD}@pg-sqlproxy-gcloud-sqlproxy.sqlproxy:5432/tagcloud",
                           "env.REDIS_CONNECTIONSTRING": "redis://:${env.REDIS_PASSWORD}@redis-production-redis-ha-master-svc.db-production/0",
+                          "env.AMQP_CHECK_STRING": "livee:${env.AMQP_PASSWORD} http://${AMQP_HOST}:15672/api/aliveness-test/tagcloud",
                           "resources.limits.cpu": "500m",
                           "resources.limits.memory": "256Mi"
                           // "resources.requests.cpu": "250m",

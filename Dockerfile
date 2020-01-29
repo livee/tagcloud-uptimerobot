@@ -3,17 +3,9 @@ FROM node:13.7.0-alpine3.10
 RUN apk update && \
     apk upgrade && \
     apk add --no-cache openssh-client git && \
-    apk add bash
-
-# RUN echo "https://nl.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/repositories && \
-#     apk update && \
-#     apk add rabbitmq-server curl && \
-#     apk add rabbitmq-c-utils && \
-#     apk add rabbitmq-c-dev && \
-#     apk add rabbitmq-c && \
-#     chmod -R 777 /usr/lib/rabbitmq && \
-#     chmod -R 777 /etc && \
-#     mkdir /etc/rabbitmq
+    apk add bash && \
+    apk add curl && \
+    apk add jq
 
 RUN apk add postgresql
 
