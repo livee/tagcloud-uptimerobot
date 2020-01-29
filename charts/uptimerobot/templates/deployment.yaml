@@ -33,9 +33,9 @@ spec:
           - name: PORT
             value: {{.Values.env.PORT| quote}}
           - name: AMQP_CHECK_AUTH
-            value: {{.Values.env.PORT| quote}}
+            value: {{.Values.env.AMQP_CHECK_AUTH| quote}}
           - name: AMQP_CHECK_URL
-            value: {{.Values.env.PORT| quote}}
+            value: {{.Values.env.AMQP_CHECK_URL| quote}}
           - name: AMQP_CONNECTIONSTRING
             valueFrom:
               secretKeyRef:
