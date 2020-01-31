@@ -44,16 +44,14 @@ pipeline {
 
     stage('Deploy: Staging') {
       environment {
-        AMQP_PASSWORD = credentials('RABBITMQ_STAGING_PASSWORD') 
+        AMQP_PASSWORD = credentials('RABBITMQ_STAGING_PASSWORD')
         REDIS_PASSWORD = credentials('REDIS_STAGING_PASSWORD')
         POSTGRES_PASSWORD = credentials('POSTGRES_STAGING_PASSWORD')
         AMQP_HOST = 'rabbit-staging.queue-staging'
       }
       agent { docker 'buildpack-deps:jessie-scm' }
       when {
-        expression {
-          return changeRequest() || env.BRANCH_NAME == 'master'
-        }
+        changeRequest() // If it's a pull request
       }
       steps {
         echo 'Deploying to Staging'
@@ -80,7 +78,7 @@ pipeline {
     }
     stage('Deploy: Production') {
       environment {
-        AMQP_PASSWORD = credentials('RABBITMQ_PRODUCTION_PASSWORD') 
+        AMQP_PASSWORD = credentials('RABBITMQ_PRODUCTION_PASSWORD')
         REDIS_PASSWORD = credentials('REDIS_PRODUCTION_PASSWORD')
         PG_USERNAME = credentials('POSTGRES_PRODUCTION_USERNAME')
         PG_PASSWORD = credentials('POSTGRES_PRODUCTION_PASSWORD')
@@ -88,7 +86,7 @@ pipeline {
       }
       agent { docker 'buildpack-deps:jessie-scm' }
       when {
-        branch 'do-not-build-master'
+        branch 'master'
       }
       steps {
         echo 'Deploying to Production'
