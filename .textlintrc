@@ -1,0 +1,13 @@
+{
+  "rules": {
+    "no-dead-link": {
+      "baseURI": null,
+      "checkRelative": false,
+      "ignore": []
+    },
+    "no-empty-section": true,
+    "structure": {
+      "headers": ["Description", "Environment variables", "Dependencies", "Internal Architecture", "Global Architecture", "FAQ"]
+    }
+  }
+}

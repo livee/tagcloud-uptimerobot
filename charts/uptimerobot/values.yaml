@@ -1,0 +1,46 @@
+minReplicas: 1
+containerPort: 80
+serviceName: uptimerobot
+
+image:
+  repository: eu.gcr.io/production-206512/tagcloud-uptimerobot
+  tag: latest
+  pullPolicy: IfNotPresent
+
+resources:
+  # If you do not want to specify resources, comment the following
+  # lines and add curly braces after 'resources:'.
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 0
+    memory: 0
+
+labels:
+  app: uptimerobot
+
+env:
+  PORT: '80'
+  AMQP_CONNECTIONSTRING: ''
+  POSTGRES_CONNECTIONSTRING: ''
+  REDIS_CONNECTIONSTRING: ''
+  AMQP_CHECK_URL: ''
+  AMQP_CHECK_AUTH: ''
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/tls-acme: 'true'
+    kubernetes.io/ingress.class: 'nginx'
+    ingress.kubernetes.io/ssl-redirect: 'true'
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/rewrite-target: /
+
+    # Cors
+    nginx.ingress.kubernetes.io/enable-cors: 'true'
+    nginx.ingress.kubernetes.io/cors-allow-origin: '*'
+    nginx.ingress.kubernetes.io/cors-allow-methods: 'GET, OPTIONS'
+    nginx.ingress.kubernetes.io/cors-allow-headers: 'Authorization,DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range'
+  path: /uptimerobot
+  host: tagcloud.staging.livee.com
