@@ -1,0 +1,17 @@
+{
+  "apps": [
+    {
+      "name": "ProbeServer",
+      "cwd": "./",
+      "script": "server.js",
+      "watch": false,
+      "exec_mode": "fork",
+      "env_staging": {
+        "NODE_ENV": "development"
+      },
+      "env_production": {
+        "NODE_ENV": "production"
+      }
+    }, {}
+  ]
+}
