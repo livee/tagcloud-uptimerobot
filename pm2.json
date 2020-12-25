@@ -1,0 +1,31 @@
+{
+    "apps": [
+      {
+        "name": "Monitor",
+        "cwd": "/srv/LiveeMonitor",
+        "script": "bin/www",
+        "watch": false,
+        "exec_mode": "fork",
+        "env_staging": {
+          "NODE_ENV": "development"
+        },
+        "env_production": {
+          "NODE_ENV": "production"
+        }
+      },
+      {
+        "name": "ProbeServer",
+        "cwd": "/srv/ProbeServer",
+        "script": "server.js",
+        "watch": false,
+        "exec_mode": "fork",
+        "env_staging": {
+          "NODE_ENV": "development"
+        },
+        "env_production": {
+          "NODE_ENV": "production"
+        }
+      }
+    ]
+  }
+  
