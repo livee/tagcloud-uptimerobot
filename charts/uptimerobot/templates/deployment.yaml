@@ -51,3 +51,15 @@ spec:
               secretKeyRef:
                 name: {{.Values.serviceName}}-secret
                 key: REDIS_CONNECTIONSTRING
+          - name: API_PORT
+            value: {{.Values.env.API_PORT| quote}}
+          - name: TAGCLOUD_DOMAIN
+            value: {{.Values.env.TAGCLOUD_DOMAIN| quote}}
+          - name: TAGCLOUD_NAMESPACE
+            value: {{.Values.env.TAGCLOUD_NAMESPACE| quote}}
+          - name: TAGCLOUD_SOCKETIOPATH
+            value: {{.Values.env.TAGCLOUD_SOCKETIOPATH| quote}}
+          - name: CLOUD_SESSION
+            value: {{.Values.env.CLOUD_SESSION| quote}}
+          - name: CLOUD_CLIENT
+            value: {{.Values.env.CLOUD_CLIENT| quote}}
