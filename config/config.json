@@ -1,7 +1,7 @@
 {
   "tasks" : [
     {"name": "DNS", "command": "ping uptimerobot.com -c 1 -t 200 | tail -2 | head -1 | cut -c24"},
-    {"name": "NETWORK", "command": "ping 8.8.8.8 -c 1 -t 10 | tail -2 | head -1 | cut -c24"},
+    {"name": "NETWORK", "command": "ping 8.8.8.8 -c 1 | tail -2 | head -1 | cut -c24"},
     {"name": "NGINX", "command": "(if [[ $(pgrep nginx | head -1) ]]; then echo 1; else echo 0; fi) | tail -1"},
     {"name": "NODE", "command": "(if [[ $(pgrep node | head -1) ]]; then echo 1; else echo 0; fi) | tail -1"},
     {"name": "REDIS", "command": "(if [[ $(rdcli -u ${REDIS_CONNECTIONSTRING} info | grep ^role | tr -d '\\r' | head -1) = 'role:master' ]]; then echo 1; else echo 0; fi) | tail -1"},

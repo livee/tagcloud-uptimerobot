@@ -41,5 +41,4 @@ RUN rm -rf /root/.ssh
 # The port must be a string
 ENV PORT="80"
 EXPOSE 80
-# CMD [ "pm2-runtime", "start", "pm2.json", "--name=\"LiveeMonitor\"", "--env", "production" ]
 CMD [ "pm2-runtime", "start", "pm2.json", "--env", "production" ]
