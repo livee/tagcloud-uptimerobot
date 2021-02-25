@@ -19,7 +19,7 @@ const init = async () => {
     method: 'GET',
     path: '/create_probe',
     handler: (request, h) => {
-      return server.app.createProbe ? 'ok' : 'ko'
+      return server.app.createProbe ? 'ok' : 'ko';
     }
   });
 
@@ -37,7 +37,7 @@ const init = async () => {
   createProbe();
   schedule.scheduleJob('*/5 * * * *', () => {
     createProbe();
-  })
+  });
 };
 
 process.on('unhandledRejection', (err) => {

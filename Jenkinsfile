@@ -113,7 +113,6 @@ pipeline {
                           "env.REDIS_CONNECTIONSTRING": "redis://:${env.REDIS_PASSWORD}@redis-production-redis-ha-master-svc.db-production/0",
                           "env.AMQP_CHECK_AUTH": "livee:${env.AMQP_PASSWORD}",
                           "env.AMQP_CHECK_URL": "http://${AMQP_HOST}:15672/api/aliveness-test/tagcloud",
-                          "env.AMQP_CHECK_URL": "http://${AMQP_HOST}:15672/api/aliveness-test/tagcloud",
                           "resources.limits.cpu": "500m",
                           "resources.limits.memory": "256Mi",
                           // "resources.requests.cpu": "250m",
